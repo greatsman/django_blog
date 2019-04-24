@@ -1,0 +1,41 @@
+{% extends 'layout/backend/base.html' %}
+
+
+{% block contents %}
+  <!-- Page Heading -->
+  <h1 class="h3 mb-4 text-gray-800">Manajemen Artikel</h1>
+
+  <div class="row">
+
+    <div class="col-lg-10">
+      <!-- Circle Buttons -->
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Update Artikel</h6>
+        </div>
+        <div class="card-body">
+          <form method="POST">
+            {% csrf_token %}
+            
+            <div class="form-group">
+              <label for="{{form.judul.id_for_label}}">{{form.judul.label}}</label>
+              <input class="form-control" type="text" name="{{form.judul.name}}" maxlength="{{form.judul.max}}" id="{{form.judul.id_for_label}}" value="{{form.judul.value}}" required>
+            </div>
+            <div class="form-group">
+              <label for="{{form.isi.id_for_label}}">{{form.isi.label}}</label>
+              <textarea class="form-control" name="{{form.isi.name}}" id="{{form.judul.id_for_label}}" cols="30" rows="10" required>{{form.isi.value}}</textarea>
+            </div>
+            <div class="form-group">
+              <label for="{{form.kategori.id_for_label}}">{{form.kategori.label}}</label>
+              <input class="form-control" type="text" name="{{form.kategori.name}}" maxlength="{{form.kategori.max}}" id="{{form.kategori.id_for_label}}" value="{{form.kategori.value}}" required>
+            </div>
+            <button type="submit" class="btn btn-warning">Update</button>
+            <a href="{% url 'dashboard_artikel:index' 1  %}" class="btn btn-success">Batal</a>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+{% endblock contents %}
+  

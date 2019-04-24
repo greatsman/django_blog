@@ -1,0 +1,40 @@
+{% extends 'layout/backend/base.html' %}
+
+
+{% block contents %}
+<!-- Page Heading -->
+<h1 class="h3 mb-4 text-gray-800">Manajemen Artikel</h1>
+<div class="row">
+
+        <div class="col-lg-6">
+          <!-- Circle Buttons -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Konfirmasi Hapus</h6>
+            </div>
+            <div class="card-body">
+                <p>Apakah Anda Akan Menghapus Artikel</p>
+                <h3>{{object.judul}}</h3>
+                <form method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-icon-split">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-check"></i>
+                        </span>
+                        <span class="text">Ya</span>
+                    </button>
+                    <a href="{% url 'dashboard_artikel:index' 1  %}" class="btn btn-primary btn-icon-split">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-times"></i>
+                        </span>
+                        <span class="text">Tidak</span>
+                    </a>
+                </form>
+            </div>
+          </div>
+        </div>
+    
+      </div>
+
+
+{% endblock contents %}

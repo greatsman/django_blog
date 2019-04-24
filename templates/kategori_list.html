@@ -1,0 +1,69 @@
+{% extends 'layout/frontend/base.html' %}
+
+
+{% block contents %}
+<div class="col-md-8">
+    <h1 class="my-4">
+        Artikel <small>{{heading_kategori}}</small>
+    </h1>
+     <!-- Blog Post -->
+    {% for artikel in artikel_list  %}
+
+        <div class="card mb-4">
+                <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+                <div class="card-body">
+                    <h2 class="card-title">{{artikel.judul}}</h2>
+                    <p class="card-text">{{artikel.isi|truncatewords:50}}</p>
+                    <a href="{% url 'detail' artikel.slug %}"  class="btn btn-primary">Read More &rarr;</a>
+                </div>
+                <div class="card-footer text-muted">
+                    Diposting {{artikel.published}} dalam Kategori
+                    <a href="{% url 'category' artikel.kategori %}">{{artikel.kategori}}</a>
+                </div>
+        </div>
+    {% endfor %}
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+        <ul class="pagination justify-content-center mb-4">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="{% url 'list' page_obj.previous_page_number  %}">&larr; Terbaru</a>
+                     </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">&larr; Terbaru</a>
+                    </li>
+                {% endif %}
+                
+                
+                {% for page in paginator.page_range  %}
+                    {% if page is page_obj.number %}
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link" href="#">{{page}}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="{% url 'list' page  %}">{{page}}</a>
+                        </li>
+                    {% endif %}
+                        
+                {% endfor %}
+                    
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="{% url 'list' page_obj.next_page_number  %}">Sebelumnya &rarr;</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">Sebelumnya &rarr;</a>
+                    </li>
+                {% endif %}
+        </ul>
+    {% endif %}
+</div>
+{% include 'layout/frontend/snippets/sidebar.html' %}
+{% endblock contents %}
+
+
+    

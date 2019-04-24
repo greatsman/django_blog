@@ -1,0 +1,58 @@
+{% extends 'layout/frontend/base.html' %}
+
+{% block title %}
+      Blog Home - Start Bootstrap Template
+{% endblock title %}
+
+{% block contents %}
+      <div class="col-md-12">
+            <h1 class="my-4">
+                  Artikel <small>Terbaru</small>
+            </h1>
+            <div class="row" >
+                  {% for artikel in artikel_all_list  %}
+                        {% if forloop.counter < 9 %}
+                              <div class="col-md-3">
+                                    <div class="card my-4">
+                                          <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+                                          <div class="card-body">
+                                                <h5 class="card-title">{{artikel.judul}}</h5>
+                                                <a href="{% url 'detail' artikel.slug %}"  class="btn btn-primary">Read More &rarr;</a>
+                                          </div>
+                                          <div class="card-footer text-muted">
+                                                {{artikel.published|date}}
+                                          </div>
+                                    </div>
+                              </div>
+                        {% endif %}
+                  {% endfor %}
+            </div>
+            <ul class="pagination justify-content-center mb-4">
+                  <li class="page-item">
+                        <a class="btn btn-dark" href="{% url 'list' 1  %}">Selengkapnya</a>
+                  </li>
+            </ul>
+      </div>
+      
+      <div class="col-md-12">
+                  <h1 class="my-4">
+                        Artikel <small>Kategori</small>
+                  </h1>
+                  <div class="row">
+                        {% for artikel in artikel_each_category_list  %}
+                              {% if forloop.counter < 9 %}
+                                    <div class="col-md-3">
+                                          <div class="card my-4">
+                                                <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+                                                <div class="card-body">
+                                                      <h5 class="card-title">{{artikel.kategori}}</h5>
+                                                      <a href="{% url 'category' artikel.kategori %}"  class="btn btn-primary">Read More &rarr;</a>
+                                                </div>
+                                          </div>
+                                    </div>
+                              {% endif %}
+                        {% endfor %}
+                  </div>
+            </div>
+{% endblock contents %}
+    

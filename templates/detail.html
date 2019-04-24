@@ -1,0 +1,41 @@
+{% extends 'layout/frontend/base.html' %}
+
+
+{% block contents %}
+<div class="col-md-8">
+    <h1 class="my-4">
+        {{artikel.judul}}
+    </h1>
+     <!-- Blog Post -->
+
+
+    <div class="card mb-4">
+            <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
+            <div class="card-body">
+                <p class="card-text">{{artikel.isi}}</p>
+            </div>
+            <div class="card-footer text-muted">
+                Diposting {{artikel.published}} dalam Kategori
+                <a href="#">{{artikel.kategori}}</a>
+            </div>
+    </div>
+
+    <ul class="pagination justify-content-center mb-4">
+        
+        {% if next != None %}
+            <li class="page-item">
+                <a class="page-link" href="{% url 'detail' next  %}">&larr; Baru</a>
+            </li>
+        {% endif %}
+        {% if previous != None %}
+            <li class="page-item ">
+                <a class="page-link" href="{% url 'detail' previous  %}">Lama &rarr;</a>
+            </li>
+        {% endif %}
+        
+        
+    </ul>
+</div> 
+{% include 'layout/frontend/snippets/sidebar.html' %}
+{% endblock contents %}
+    

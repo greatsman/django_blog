@@ -1,0 +1,100 @@
+{% extends 'layout/backend/base.html' %}
+
+
+{% block contents %}
+  <!-- Page Heading -->
+  <h1 class="h3 mb-4 text-gray-800">Manajemen Artikel</h1>
+
+  <div class="row">
+
+    <div class="col-lg-8">
+      <!-- Circle Buttons -->
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Artikel</h6>
+        </div>
+        <div class="card-body">
+            <a href="{% url 'dashboard_artikel:add'  %}"  class="btn btn-primary btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-plus"></i>
+                </span>
+                <span class="text">Tambah</span>
+            </a>
+            <div class="my-2"></div>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Judul</th>
+                    <th scope="col">Kategori</th>
+                    <th scope="col" colspan="2">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for artikel in object_list  %}
+                        <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td>{{artikel.judul}}</td>
+                            <td>{{artikel.kategori}}</td>
+                            <td>
+                                <a href="{% url 'dashboard_artikel:update' artikel.id  %}" class="btn btn-primary btn-circle">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{% url 'dashboard_artikel:delete' artikel.id  %}" class="btn btn-danger btn-circle">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <hr>
+            <nav aria-label="Page navigation example">
+                <!-- Pagination -->
+                {% if is_paginated %}
+                <ul class="pagination justify-content-center mb-4">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="{% url 'dashboard_artikel:index' page_obj.previous_page_number  %}">&larr; Terbaru</a>
+                            </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#">&larr; Terbaru</a>
+                            </li>
+                        {% endif %}
+                        
+                        
+                        {% for page in paginator.page_range  %}
+                            {% if page is page_obj.number %}
+                                <li class="page-item active" aria-current="page">
+                                    <a class="page-link" href="#">{{page}}</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item">
+                                    <a class="page-link" href="{% url 'dashboard_artikel:index' page  %}">{{page}}</a>
+                                </li>
+                            {% endif %}
+                                
+                        {% endfor %}
+                            
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="{% url 'dashboard_artikel:index' page_obj.next_page_number  %}">Sebelumnya &rarr;</a>
+                            </li>
+                            {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#">Sebelumnya &rarr;</a>
+                            </li>
+                        {% endif %}
+                </ul>
+                {% endif %}
+            </nav>
+        </div>
+      </div>
+    </div>
+
+  </div>
+{% endblock contents %}
+  
