@@ -16,13 +16,24 @@ Including another URLconf
 from django.conf.urls import url,include
 from django.contrib import admin
 from django.views.generic import TemplateView
+from django.contrib.auth.decorators import login_required
 
-from . views import BlogHomeView,BlogDashboardView
-from artikel.views import *
+from . views import BlogHomeView, BlogDashboardView, LoginFormView
+from artikel.views import (
+                            ArtikelDetailView,ArtikelKategoriListView,ArtikelListView,
+                            )
+
+from django.urls import reverse_lazy
+from django.contrib.auth.views import(
+    LoginView,
+    LogoutView,
+)
 
 urlpatterns = [
     url(r'^dashboard/artikel/', include("artikel.urls",namespace="dashboard_artikel")),
     url(r'^dashboard/', BlogDashboardView.as_view(), name='dashboard'),
+    url(r'^login/$', LoginFormView.as_view(), name='login'),
+    url(r'^logout/$', LogoutView.as_view(next_page=reverse_lazy('login')), name='logout'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^kategori/(?P<category>[\w\s]+)$', ArtikelKategoriListView.as_view(), name='category'),
     url(r'^detail/(?P<slug>[\w-]+)$', ArtikelDetailView.as_view(), name='detail'),
